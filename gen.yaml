@@ -1,4 +1,9 @@
 configVersion: 1.0.0
+management:
+  docChecksum: ca0e7ccaf76a3d18be342ba7ac219c8b
+  docVersion: 6.1.1
+  speakeasyVersion: 1.74.3
+  generationVersion: 2.86.6
 generation:
   comments:
     disableComments: false
@@ -7,7 +12,13 @@ generation:
   sdkClassName: MyTest
   singleTagPerOp: false
   tagNamespacingDisabled: false
+features:
+  terraform:
+    core: 2.83.2
+    globalSecurity: 2.81.1
+    globalServerURLs: 2.82.0
+    includes: 2.81.1
 terraform:
-  version: 0.0.1
+  version: 0.1.0
   author: testing
   packageName: MyTest
