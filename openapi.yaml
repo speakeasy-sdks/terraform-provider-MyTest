@@ -1,0 +1,681 @@
+openapi: 3.0.3
+info:
+  title: Morpheus API
+  description: |-
+    Morpheus is a powerful cloud management tool that provides provisioning, monitoring, logging, backups, and application deployment strategies.
+
+    This document describes the Morpheus API protocol and the available endpoints. Sections are organized in the same manner as they appear in the Morpheus UI.
+  version: 6.1.1
+  termsOfService: https://morpheusdata.com/terms-and-conditions/
+  contact:
+    email: dev@morpheusdata.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://{serverURL}
+  description: Morpheus API
+  variables:
+    serverURL:
+      default: CHANGEME
+security:
+- bearerAuth: []
+tags:
+- name: Administration
+  description: All Endpoints Under the Administration Tab
+- name: Activity
+  description: Manage Appliance Activity Logs
+- name: Alerts
+  description: Manage Alerts
+- name: Appliance Settings
+  description: Manage Appliance Settings
+- name: Approvals
+  description: Manage Approvals
+- name: Apps
+  description: Manage Apps
+- name: Archives
+  description: |
+    Archives provides a way to store your files and make them available for download by your Scripts and Users.
+
+    Archives are organized by buckets. Each bucket has a unique name that is used to identify it in URLs and Scripts.
+- name: Authentication
+  description: Manage Appliance Authentication
+- name: Automation
+  description: Manage Tasks and Workflows
+- name: Backup Settings
+  description: Manage Backup Settings
+- name: Billing
+  description: Manage Billing
+- name: Blueprints
+  description: Manage Blueprints
+- name: Budgets
+  description: Manage Budgets
+- name: Catalog Items
+  description: |
+    Provides API interfaces for the managing catalog item types. These are the types that become available for order by the Service Catalog persona. This is the adminstrative api for the Library: Catalog Items functionality which was previously located under Tools: Self Service.
+- name: Checks
+  description: Manage Monitoring Checks
+- name: Clients
+  description: Manage Clients
+- name: Clouds
+  description: Manage Clouds
+- name: Cluster Layouts
+  description: Manage Cluster Layouts
+- name: Clusters
+  description: Manage Kubernetes Clusters
+- name: Contacts
+  description: Manage Monitoring Contacts
+- name: Containers
+  description: Manage Containers
+- name: Credentials
+  description: Manage Credentials
+- name: Cypher
+  description: |-
+    Cypher at its core is a secure Key/Value store. But what makes cypher useful is the ability to securely store or generate credentials to connect to your instances. Not only are these credentials encrypted but by using a cypher you don't have to burn in connection credentials between instances into your apps.
+    Cypher keys can be revoked, either through lease timeouts or manually. So even if somebody were to gain access to your keys you could revoke access to the keys and generate new ones for your applications.
+- name: Dashboard
+  description: View Dashboard Details
+- name: Deployments
+  description: Manage File Deployments
+- name: Deploys
+  description: Manage Deploys
+- name: Documentation
+  description: View documentation for your [Morpheus Data](https://morpheusdata.com) appliance.
+- name: Environments
+  description: Manage Environments
+- name: File Templates
+  description: Manage File Templates
+- name: Groups
+  description: Manage Groups
+- name: Guidance
+  description: Manage Guidance Recommendations
+- name: Guidance Settings
+  description: Manage Guidance Settings
+- name: Health
+  description: View Appliance Health Statistics
+- name: History
+  description: View History
+- name: Hosts
+  description: Manage Hosts
+- name: Identity Sources
+  description: Manage Identity Sources
+- name: Image Builds
+  description: Manage Image Builds
+- name: Incidents
+  description: Manage Ticket Incidents
+- name: Infrastructure
+  description: All Endpoints Under the Infrastructure Tab
+- name: Inputs
+  description: Manage Inputs (Option Types)
+- name: Instance Types
+  description: Manage Instance Types
+- name: Instances
+  description: Manage Instances
+- name: Integrations
+  description: Manage Integrations
+- name: Invoices
+  description: Manage Invoices
+- name: Jobs
+  description: Manage Jobs
+- name: Key Pairs
+  description: Manage Key Pairs
+- name: Layouts
+  description: Manage Layouts
+- name: Library
+  description: All Endpoints Under the Library Tab
+- name: License
+  description: Manage Appliance License
+- name: Load Balancers
+  description: Manage Load Balancers
+- name: Log Settings
+  description: Manage Log Settings
+- name: Logs
+  description: View Logs
+- name: Monitoring
+  description: All Endpoints Under the Monitoring Tab
+- name: Monitoring Settings
+  description: Manage Monitoring Settings
+- name: Morpheus API
+  description: All Endpoints Specific to Morpheus API
+- name: Networks
+  description: Manage Networks
+- name: Node Types
+  description: Manage Node/VM Types
+- name: Operations
+  description: All Endpoints Under the Operations Tab
+- name: Option Lists
+  description: Manage Option Lists
+- name: Options
+  description: Manage Options
+- name: Personas
+  description: All Endpoints Pertaining to Personas
+- name: Ping
+  description: Ping Appliance
+- name: Plugins
+  description: Manage Plugins
+- name: Policies
+  description: Manage Policies
+- name: Price Sets
+  description: Manage Price Sets
+- name: Prices
+  description: Manage Prices
+- name: Projects
+  description: Manage Projects
+- name: Provisioning
+  description: All Endpoints Under the Provisioning Tab
+- name: Provisioning Settings
+  description: Manage Provisioning Settings
+- name: Provisioning Licenses
+  description: |
+    Provides API interfaces for managing provisioning licenses within Morpheus. This allows configuration of which Windows license keys should be installed when provisioning your virtual images.
+- name: Reports
+  description: Manage Reports
+- name: Resource Pools
+  description: Manage Resource Pools
+- name: Roles
+  description: Manage Roles (Authorities)
+- name: Scripts
+  description: Manage Scripts
+- name: Search
+  description: Global Search Functions
+- name: Security Groups
+  description: Manage Security Groups
+- name: Security Packages
+  description: Manage Security Packages
+- name: Security Scans
+  description: Manage Security Scans
+- name: Self Service
+  description: Manage Self Service
+- name: Service Catalog
+  description: Manage Service Catalog
+- name: Service Plans
+  description: Manage Service Plans
+- name: Setup
+  description: Setup New Appliance
+- name: Spec Templates
+  description: Manage Spec Templates
+- name: SSL Certificates
+  description: Manage SSL Certificates
+- name: Storage
+  description: Manage Storage
+- name: Tenants
+  description: Manage Tenants (Accounts)
+- name: Tools
+  description: All Endpoints Under the Tools Tab
+- name: Usage
+  description: View Usage
+- name: Users
+  description: Manage Users
+- name: VDI
+  description: Manage VDI Pools & Desktops
+- name: Virtual Images
+  description: Manage Virtual Images
+- name: Whitelabel Settings
+  description: Manage Whitelabelling
+- name: Wiki
+  description: Manage Wiki
+externalDocs:
+  url: https://docs.morpheusdata.com
+paths:
+  /api/zones:
+    post:
+      summary: Creates a Cloud
+      x-speakeasy-entity-operation: zone#create
+      description: |
+        Creates a cloud.
+      operationId: addClouds
+      tags:
+      - Clouds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - zone
+              properties:
+                zone:
+                  $ref: '#/components/schemas/zoneCreate'
+      responses:
+        '200':
+          description: Successful Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    zone:
+                      $ref: '#/components/schemas/zone'
+        4XX:
+          $ref: '#/components/responses/4xx'
+        5XX:
+          $ref: '#/components/responses/5xx'
+  /api/zones/{id}:
+    get:
+      summary: Retrieves a Specific Cloud
+      x-speakeasy-entity-operation: zone#get
+      description: |
+        Retrieves a specific cloud.
+      operationId: getClouds
+      tags:
+      - Clouds
+      parameters:
+      - $ref: '#/components/parameters/id-path'
+      responses:
+        '200':
+          description: Successful Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  zone:
+                    $ref: '#/components/schemas/zone'
+        4XX:
+          $ref: '#/components/responses/4xx'
+        5XX:
+          $ref: '#/components/responses/5xx'
+    put:
+      summary: Updates a Cloud
+      x-speakeasy-entity-operation: zone#update
+      description: |
+        Updates a cloud.
+      operationId: updateClouds
+      tags:
+      - Clouds
+      parameters:
+      - $ref: '#/components/parameters/id-path'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - zone
+              properties:
+                zone:
+                  $ref: '#/components/schemas/zone'
+      responses:
+        '200':
+          description: Successful Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    zone:
+                      $ref: '#/components/schemas/zone'
+        4XX:
+          $ref: '#/components/responses/4xx'
+        5XX:
+          $ref: '#/components/responses/5xx'
+    delete:
+      summary: Deletes a Cloud
+      x-speakeasy-entity-operation: zone#delete
+      description: |
+        Deletes a specified Cloud.
+      operationId: removeClouds
+      tags:
+      - Clouds
+      parameters:
+      - $ref: '#/components/parameters/id-path'
+      responses:
+        '200':
+          description: Successful Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200-success'
+        4XX:
+          $ref: '#/components/responses/4xx'
+        5XX:
+          $ref: '#/components/responses/5xx'
+components:
+  securitySchemes:
+    bearerAuth:
+      description: "Populate a bearer token for the Morpheus appliance you are testing.\nThis can be generated in the UI under your personal `user settings`\nor\nAdditional API methods can be found below.\nhttps://morpheusdata.readme.io/reference/getaccesstoken-3    \n"
+      type: http
+      scheme: bearer
+    cypherAuth-XCToken:
+      description: An access token or an execution lease token.
+      type: apiKey
+      in: header
+      name: X-Cypher-Token
+    cypherAuth-XVToken:
+      description: An access token or an execution lease token.
+      type: apiKey
+      in: header
+      name: X-Vault-Token
+    cypherAuth-XMLease:
+      description: An execution lease token.
+      type: apiKey
+      in: header
+      name: X-Morpheus-Lease
+  parameters:
+    enableMaintenance:
+      name: enabled
+      in: query
+      description: Pass true to turn on maintenance mode, or false to turn it off. If no value is given then it will be toggled from off to on or vice versa.
+      schema:
+        type: boolean
+    id-path:
+      name: id
+      in: path
+      description: Morpheus ID of the Object being referenced
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 1
+    lastUpdated:
+      name: lastUpdated
+      in: query
+      description: Date filter, restricts query to only load resources updated more recently than the date specified (ISO 8601)
+      example: 2019-03-06T17:52:29+0000
+      schema:
+        type: string
+        format: date-time
+    cloudTypes:
+      name: type
+      in: query
+      description: |
+        If specified will return all zones by cloud type code.
+        Refer to `Zone Types` API for up to date listings.
+      schema:
+        type: string
+        enum:
+        - alibaba
+        - amazon
+        - azure
+        - azurestack
+        - dell
+        - digitalocean
+        - googlecloud
+        - oneview
+        - huawei
+        - hyperv
+        - bluemix
+        - bluemixCloudFoundry
+        - centurylink-edge
+        - macstadium
+        - standard
+        - nutanix
+        - opentelekom
+        - openstack
+        - oraclecloud
+        - oraclevm
+        - platform9
+        - scvmm
+        - softlayer
+        - ucs
+        - upcloud
+        - vcd
+        - vmwareCloudAws
+        - esxi
+        - fusion
+        - vmware
+        - xenserver
+    groupId:
+      name: groupId
+      in: query
+      description: If specified will return all zones assigned to a server group by id. Accepts multiple values.
+      schema:
+        type: integer
+        format: int64
+      example: 13
+    max:
+      name: max
+      in: query
+      description: Maximum number of records to return
+      schema:
+        type: integer
+        format: int64
+        default: 25
+    offset:
+      name: offset
+      in: query
+      description: Offset records, the number of records to skip, for paginating requests
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    sort:
+      name: sort
+      in: query
+      description: Sort order, the name of the property to sort by
+      schema:
+        type: string
+        default: name
+    direction:
+      name: direction
+      in: query
+      description: Sort direction, use 'desc' to reverse sort
+      schema:
+        type: string
+        default: asc
+        enum:
+        - asc
+        - desc
+      example: asc
+    phrase:
+      name: phrase
+      in: query
+      description: Search phrase for partial matches on name or description
+      schema:
+        type: string
+    name:
+      name: name
+      in: query
+      description: Filter by name, wildcard may be specified as %, eg. example-%
+      schema:
+        type: string
+      example: example-%
+  schemas:
+    200-success:
+      type: object
+      properties:
+        success:
+          type: boolean
+    default-error:
+      type: object
+      properties:
+        msg:
+          type: string
+    zoneVcenterConfig:
+      type: object
+      properties:
+        apiUrl:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+          x-speakeasy-param-sensitive: true
+          nullable: true
+        datacenter:
+          type: string
+        applianceUrl:
+          type: string
+          nullable: true
+    zoneVcenterConfig2:
+      type: object
+      properties:
+        apiUrl:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+          x-speakeasy-terraform-ignore: true
+          nullable: true
+        datacenter:
+          type: string
+        applianceUrl:
+          type: string
+          nullable: true
+    zoneCreate:
+      x-speakeasy-entity: zone
+      type: object
+      required:
+      - name
+      - zoneType
+      - groupId
+      properties:
+        name:
+          type: string
+          description: A unique name scoped to your account for the cloud
+          example: My Cloud
+        description:
+          type: string
+          description: Optional description field if you want to put more info there
+        code:
+          type: string
+          description: Optional code for use with policies
+          example: mycloud
+        visibility:
+          type: string
+          description: private or public
+          enum:
+          - private
+          - public
+          default: private
+        zoneType:
+          type: object
+          description: Map containing the Cloud (zone) code name. See the zone-types API to fetch a list of all available Cloud (zone) types and their codes.
+          properties:
+            code:
+              type: string
+              example: vmware
+        groupId:
+          type: integer
+          format: int64
+          description: Specifies which Server group this cloud should be assigned to
+          example: 3
+        accountId:
+          type: integer
+          format: int64
+          description: Specifies which Tenant this cloud should be assigned to
+          example: 1
+        enabled:
+          type: boolean
+          description: Can be used to disable the cloud
+          default: true
+        scalePriority:
+          type: integer
+          format: int64
+          description: Scale Priority
+          default: 1
+        config:
+          $ref: '#/components/schemas/zoneVcenterConfig'
+        credential:
+          type: object
+          description: Map containing Credential ID. Setting `type` to `local` means use the values set in the local cloud config instead of associating a credential.
+          properties:
+            type:
+              type: string
+              default: local
+    zone:
+      type: object
+      x-speakeasy-entity: zone
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        code:
+          type: string
+        accountId:
+          type: integer
+          format: int64
+        visibility:
+          type: string
+        enabled:
+          type: boolean
+        zoneType:
+          type: object
+          description: Map containing the Cloud (zone) code name. See the zone-types API to fetch a list of all available Cloud (zone) types and their codes.
+          properties:
+            code:
+              type: string
+              example: vmware
+        scalePriority:
+          type: integer
+          format: int64
+        config:
+          $ref: '#/components/schemas/zoneVcenterConfig2'
+        credential:
+          allOf:
+          - type: object
+            properties:
+              type:
+                type: string
+        groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              accountId:
+                type: integer
+                format: int64
+  responses:
+    4xx:
+      description: Error Codes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/default-error'
+          examples:
+            '400':
+              value:
+                msg: Bad Request – Your request failed. Check your request parameters and try again.
+            '401':
+              value:
+                msg: Unauthorized – Your API key is invalid. Check your Authorization header.
+            '403':
+              value:
+                msg: Forbidden – Your API key does not have the required role or permissions.
+            '404':
+              value:
+                msg: Not Found - The specified resource could not be found.
+            '405':
+              value:
+                msg: Method Not Allowed - You tried to access a resource with an invalid method.
+            '406':
+              value:
+                msg: Not Acceptable - You requested a format that isn’t json.
+            '410':
+              value:
+                msg: Gone - The entity requested has been removed from our servers.
+            '429':
+              value:
+                msg: Too Many Requests - You're asking too much of the server. Slow down!
+    5xx:
+      description: Error Codes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/default-error'
+          examples:
+            '500':
+              value:
+                msg: Internal Server Error - We had a problem with our server. Try again later.
+            '503':
+              value:
+                msg: Service Unavailable - We're temporarily offline for maintenance. Please try again later.
+x-readme:
+  explorer-enabled: true
+  metrics-enabled: false
+  samples-languages:
+  - curl
+  - python
+  - powershell
+  - javascript
+  - go
