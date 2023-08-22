@@ -493,22 +493,7 @@ components:
         password:
           type: string
           x-speakeasy-param-sensitive: true
-          nullable: true
-        datacenter:
-          type: string
-        applianceUrl:
-          type: string
-          nullable: true
-    zoneVcenterConfig2:
-      type: object
-      properties:
-        apiUrl:
-          type: string
-        username:
-          type: string
-        password:
-          type: string
-          x-speakeasy-param-sensitive: true
+          x-speakeasy-terraform-ignore: true
           nullable: true
         datacenter:
           type: string
@@ -516,7 +501,6 @@ components:
           type: string
           nullable: true
     zoneCreate:
-      x-speakeasy-entity: zone
       type: object
       required:
       - name
@@ -605,7 +589,7 @@ components:
           type: integer
           format: int64
         config:
-          $ref: '#/components/schemas/zoneVcenterConfig2'
+          $ref: '#/components/schemas/zoneVcenterConfig'
         credential:
           allOf:
           - type: object
