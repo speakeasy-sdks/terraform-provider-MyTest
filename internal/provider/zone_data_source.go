@@ -73,6 +73,10 @@ func (r *ZoneDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 					"datacenter": schema.StringAttribute{
 						Computed: true,
 					},
+					"password": schema.StringAttribute{
+						Computed:  true,
+						Sensitive: true,
+					},
 					"username": schema.StringAttribute{
 						Computed: true,
 					},

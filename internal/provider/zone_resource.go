@@ -78,6 +78,11 @@ func (r *ZoneResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						Computed: true,
 						Optional: true,
 					},
+					"password": schema.StringAttribute{
+						Computed:  true,
+						Optional:  true,
+						Sensitive: true,
+					},
 					"username": schema.StringAttribute{
 						Computed: true,
 						Optional: true,
