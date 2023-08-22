@@ -508,7 +508,7 @@ components:
           type: string
         password:
           type: string
-          x-speakeasy-terraform-ignore: true
+          x-speakeasy-param-sensitive: true
           nullable: true
         datacenter:
           type: string
