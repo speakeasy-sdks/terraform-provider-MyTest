@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *ZoneResourceModel) ToCreateSDKType() *shared.ZoneCreate {
+func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 	accountID := new(int64)
 	if !r.AccountID.IsUnknown() && !r.AccountID.IsNull() {
 		*accountID = r.AccountID.ValueInt64()
@@ -40,12 +40,6 @@ func (r *ZoneResourceModel) ToCreateSDKType() *shared.ZoneCreate {
 		} else {
 			datacenter = nil
 		}
-		password := new(string)
-		if !r.Config.Password.IsUnknown() && !r.Config.Password.IsNull() {
-			*password = r.Config.Password.ValueString()
-		} else {
-			password = nil
-		}
 		username := new(string)
 		if !r.Config.Username.IsUnknown() && !r.Config.Username.IsNull() {
 			*username = r.Config.Username.ValueString()
@@ -56,128 +50,6 @@ func (r *ZoneResourceModel) ToCreateSDKType() *shared.ZoneCreate {
 			APIURL:       apiURL,
 			ApplianceURL: applianceURL,
 			Datacenter:   datacenter,
-			Password:     password,
-			Username:     username,
-		}
-	}
-	var credential *shared.ZoneCreateCredential
-	if r.Credential != nil {
-		typeVar := new(string)
-		if !r.Credential.Type.IsUnknown() && !r.Credential.Type.IsNull() {
-			*typeVar = r.Credential.Type.ValueString()
-		} else {
-			typeVar = nil
-		}
-		credential = &shared.ZoneCreateCredential{
-			Type: typeVar,
-		}
-	}
-	description := new(string)
-	if !r.Description.IsUnknown() && !r.Description.IsNull() {
-		*description = r.Description.ValueString()
-	} else {
-		description = nil
-	}
-	enabled := new(bool)
-	if !r.Enabled.IsUnknown() && !r.Enabled.IsNull() {
-		*enabled = r.Enabled.ValueBool()
-	} else {
-		enabled = nil
-	}
-	groupID := r.GroupID.ValueInt64()
-	name := r.Name.ValueString()
-	scalePriority := new(int64)
-	if !r.ScalePriority.IsUnknown() && !r.ScalePriority.IsNull() {
-		*scalePriority = r.ScalePriority.ValueInt64()
-	} else {
-		scalePriority = nil
-	}
-	visibility := new(shared.ZoneCreateVisibility)
-	if !r.Visibility.IsUnknown() && !r.Visibility.IsNull() {
-		*visibility = shared.ZoneCreateVisibility(r.Visibility.ValueString())
-	} else {
-		visibility = nil
-	}
-	code1 := new(string)
-	if !r.ZoneType.Code.IsUnknown() && !r.ZoneType.Code.IsNull() {
-		*code1 = r.ZoneType.Code.ValueString()
-	} else {
-		code1 = nil
-	}
-	zoneType := shared.ZoneCreateZoneType{
-		Code: code1,
-	}
-	out := shared.ZoneCreate{
-		AccountID:     accountID,
-		Code:          code,
-		Config:        config,
-		Credential:    credential,
-		Description:   description,
-		Enabled:       enabled,
-		GroupID:       groupID,
-		Name:          name,
-		ScalePriority: scalePriority,
-		Visibility:    visibility,
-		ZoneType:      zoneType,
-	}
-	return &out
-}
-
-func (r *ZoneResourceModel) ToGetSDKType() *shared.ZoneCreate {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
-	accountID := new(int64)
-	if !r.AccountID.IsUnknown() && !r.AccountID.IsNull() {
-		*accountID = r.AccountID.ValueInt64()
-	} else {
-		accountID = nil
-	}
-	code := new(string)
-	if !r.Code.IsUnknown() && !r.Code.IsNull() {
-		*code = r.Code.ValueString()
-	} else {
-		code = nil
-	}
-	var config *shared.ZoneVcenterConfig2
-	if r.Config != nil {
-		apiURL := new(string)
-		if !r.Config.APIURL.IsUnknown() && !r.Config.APIURL.IsNull() {
-			*apiURL = r.Config.APIURL.ValueString()
-		} else {
-			apiURL = nil
-		}
-		applianceURL := new(string)
-		if !r.Config.ApplianceURL.IsUnknown() && !r.Config.ApplianceURL.IsNull() {
-			*applianceURL = r.Config.ApplianceURL.ValueString()
-		} else {
-			applianceURL = nil
-		}
-		datacenter := new(string)
-		if !r.Config.Datacenter.IsUnknown() && !r.Config.Datacenter.IsNull() {
-			*datacenter = r.Config.Datacenter.ValueString()
-		} else {
-			datacenter = nil
-		}
-		password := new(string)
-		if !r.Config.Password.IsUnknown() && !r.Config.Password.IsNull() {
-			*password = r.Config.Password.ValueString()
-		} else {
-			password = nil
-		}
-		username := new(string)
-		if !r.Config.Username.IsUnknown() && !r.Config.Username.IsNull() {
-			*username = r.Config.Username.ValueString()
-		} else {
-			username = nil
-		}
-		config = &shared.ZoneVcenterConfig2{
-			APIURL:       apiURL,
-			ApplianceURL: applianceURL,
-			Datacenter:   datacenter,
-			Password:     password,
 			Username:     username,
 		}
 	}
@@ -277,11 +149,6 @@ func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 	return &out
 }
 
-func (r *ZoneResourceModel) ToDeleteSDKType() *shared.ZoneCreate {
-	out := r.ToCreateSDKType()
-	return out
-}
-
 func (r *ZoneResourceModel) RefreshFromGetResponse(resp *shared.Zone) {
 	if resp.AccountID != nil {
 		r.AccountID = types.Int64Value(*resp.AccountID)
@@ -314,11 +181,6 @@ func (r *ZoneResourceModel) RefreshFromGetResponse(resp *shared.Zone) {
 			r.Config.Datacenter = types.StringValue(*resp.Config.Datacenter)
 		} else {
 			r.Config.Datacenter = types.StringNull()
-		}
-		if resp.Config.Password != nil {
-			r.Config.Password = types.StringValue(*resp.Config.Password)
-		} else {
-			r.Config.Password = types.StringNull()
 		}
 		if resp.Config.Username != nil {
 			r.Config.Username = types.StringValue(*resp.Config.Username)

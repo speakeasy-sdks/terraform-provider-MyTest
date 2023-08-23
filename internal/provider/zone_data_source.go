@@ -33,9 +33,7 @@ type ZoneDataSourceModel struct {
 	Code          types.String       `tfsdk:"code"`
 	Config        *ZoneVcenterConfig `tfsdk:"config"`
 	Credential    *ZoneCredential    `tfsdk:"credential"`
-	Description   types.String       `tfsdk:"description"`
 	Enabled       types.Bool         `tfsdk:"enabled"`
-	GroupID       types.Int64        `tfsdk:"group_id"`
 	Groups        []ZoneGroups       `tfsdk:"groups"`
 	ID            types.Int64        `tfsdk:"id"`
 	Name          types.String       `tfsdk:"name"`
@@ -73,10 +71,6 @@ func (r *ZoneDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 					"datacenter": schema.StringAttribute{
 						Computed: true,
 					},
-					"password": schema.StringAttribute{
-						Computed:  true,
-						Sensitive: true,
-					},
 					"username": schema.StringAttribute{
 						Computed: true,
 					},
@@ -89,18 +83,9 @@ func (r *ZoneDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 						Computed: true,
 					},
 				},
-				Description: `Map containing Credential ID. Setting ` + "`" + `type` + "`" + ` to ` + "`" + `local` + "`" + ` means use the values set in the local cloud config instead of associating a credential.`,
-			},
-			"description": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional description field if you want to put more info there`,
 			},
 			"enabled": schema.BoolAttribute{
 				Computed: true,
-			},
-			"group_id": schema.Int64Attribute{
-				Required:    true,
-				Description: `Specifies which Server group this cloud should be assigned to`,
 			},
 			"groups": schema.ListNestedAttribute{
 				Computed: true,

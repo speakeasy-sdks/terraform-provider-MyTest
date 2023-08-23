@@ -1,8 +1,8 @@
 configVersion: 1.0.0
 management:
-  docChecksum: 33cb254a8fadc1bcbbee03ac76eff79b
+  docChecksum: 2da7c4fd6088e50368955be3d2b0c1d6
   docVersion: 6.1.1
-  speakeasyVersion: 1.74.6
+  speakeasyVersion: 1.74.7
   generationVersion: 2.86.6
 generation:
   comments:
@@ -19,6 +19,6 @@ features:
     globalServerURLs: 2.82.0
     includes: 2.81.1
 terraform:
-  version: 0.2.0
+  version: 0.2.1
   author: testing
   packageName: MyTest
