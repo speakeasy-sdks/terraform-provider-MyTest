@@ -1,3 +1,3 @@
 data "MyTest_zone" "my_zone" {
-    id = 3
-        }
+  id = 3
+}
