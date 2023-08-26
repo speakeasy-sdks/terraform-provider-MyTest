@@ -604,7 +604,7 @@ components:
           type: integer
           format: int64
         config:
-          $ref: '#/components/schemas/zoneVcenterConfig2'
+          $ref: '#/components/schemas/zoneVcenterConfig'
         credential:
           allOf:
           - type: object
