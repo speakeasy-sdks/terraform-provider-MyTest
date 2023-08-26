@@ -40,6 +40,12 @@ func (r *ZoneResourceModel) ToCreateSDKType() *shared.ZoneCreate {
 		} else {
 			datacenter = nil
 		}
+		password := new(string)
+		if !r.Config.Password.IsUnknown() && !r.Config.Password.IsNull() {
+			*password = r.Config.Password.ValueString()
+		} else {
+			password = nil
+		}
 		username := new(string)
 		if !r.Config.Username.IsUnknown() && !r.Config.Username.IsNull() {
 			*username = r.Config.Username.ValueString()
@@ -50,6 +56,7 @@ func (r *ZoneResourceModel) ToCreateSDKType() *shared.ZoneCreate {
 			APIURL:       apiURL,
 			ApplianceURL: applianceURL,
 			Datacenter:   datacenter,
+			Password:     password,
 			Username:     username,
 		}
 	}
@@ -134,7 +141,7 @@ func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 	} else {
 		code = nil
 	}
-	var config *shared.ZoneVcenterConfig2
+	var config *shared.ZoneVcenterConfig
 	if r.Config != nil {
 		apiURL := new(string)
 		if !r.Config.APIURL.IsUnknown() && !r.Config.APIURL.IsNull() {
@@ -154,16 +161,23 @@ func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 		} else {
 			datacenter = nil
 		}
+		password := new(string)
+		if !r.Config.Password.IsUnknown() && !r.Config.Password.IsNull() {
+			*password = r.Config.Password.ValueString()
+		} else {
+			password = nil
+		}
 		username := new(string)
 		if !r.Config.Username.IsUnknown() && !r.Config.Username.IsNull() {
 			*username = r.Config.Username.ValueString()
 		} else {
 			username = nil
 		}
-		config = &shared.ZoneVcenterConfig2{
+		config = &shared.ZoneVcenterConfig{
 			APIURL:       apiURL,
 			ApplianceURL: applianceURL,
 			Datacenter:   datacenter,
+			Password:     password,
 			Username:     username,
 		}
 	}
@@ -300,6 +314,11 @@ func (r *ZoneResourceModel) RefreshFromGetResponse(resp *shared.Zone) {
 			r.Config.Datacenter = types.StringValue(*resp.Config.Datacenter)
 		} else {
 			r.Config.Datacenter = types.StringNull()
+		}
+		if resp.Config.Password != nil {
+			r.Config.Password = types.StringValue(*resp.Config.Password)
+		} else {
+			r.Config.Password = types.StringNull()
 		}
 		if resp.Config.Username != nil {
 			r.Config.Username = types.StringValue(*resp.Config.Username)

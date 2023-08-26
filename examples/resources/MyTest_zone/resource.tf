@@ -5,6 +5,7 @@ resource "MyTest_zone" "my_zone" {
     api_url       = "...my_api_url..."
     appliance_url = "...my_appliance_url..."
     datacenter    = "...my_datacenter..."
+    password      = "...my_password..."
     username      = "Larue_Rau85"
   }
   credential = {

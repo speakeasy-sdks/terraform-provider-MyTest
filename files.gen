@@ -57,9 +57,8 @@ internal/sdk/pkg/models/operations/removeclouds.go
 internal/sdk/pkg/models/operations/updateclouds.go
 internal/sdk/pkg/models/shared/defaulterror.go
 internal/sdk/pkg/models/shared/zone.go
-internal/sdk/pkg/models/shared/zonevcenterconfig2.go
-internal/sdk/pkg/models/shared/zonecreate.go
 internal/sdk/pkg/models/shared/zonevcenterconfig.go
+internal/sdk/pkg/models/shared/zonecreate.go
 internal/sdk/pkg/models/shared/twohundredsuccess.go
 internal/sdk/pkg/models/shared/security.go
 USAGE.md

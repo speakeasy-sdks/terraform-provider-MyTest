@@ -8,5 +8,6 @@ type ZoneVcenterConfig struct {
 	APIURL       types.String `tfsdk:"api_url"`
 	ApplianceURL types.String `tfsdk:"appliance_url"`
 	Datacenter   types.String `tfsdk:"datacenter"`
+	Password     types.String `tfsdk:"password"`
 	Username     types.String `tfsdk:"username"`
 }

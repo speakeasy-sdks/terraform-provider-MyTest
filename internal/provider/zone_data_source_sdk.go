@@ -40,6 +40,11 @@ func (r *ZoneDataSourceModel) RefreshFromGetResponse(resp *shared.Zone) {
 		} else {
 			r.Config.Datacenter = types.StringNull()
 		}
+		if resp.Config.Password != nil {
+			r.Config.Password = types.StringValue(*resp.Config.Password)
+		} else {
+			r.Config.Password = types.StringNull()
+		}
 		if resp.Config.Username != nil {
 			r.Config.Username = types.StringValue(*resp.Config.Username)
 		} else {
