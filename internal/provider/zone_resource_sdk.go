@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
+func (r *ZoneResourceModel) ToCreateSDKType() *shared.ZoneCreate {
 	accountID := new(int64)
 	if !r.AccountID.IsUnknown() && !r.AccountID.IsNull() {
 		*accountID = r.AccountID.ValueInt64()
@@ -53,16 +53,130 @@ func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 			Username:     username,
 		}
 	}
+	var credential *shared.ZoneCreateCredential
+	if r.Credential != nil {
+		id := new(int64)
+		if !r.Credential.ID.IsUnknown() && !r.Credential.ID.IsNull() {
+			*id = r.Credential.ID.ValueInt64()
+		} else {
+			id = nil
+		}
+		credential = &shared.ZoneCreateCredential{
+			ID: id,
+		}
+	}
+	description := new(string)
+	if !r.Description.IsUnknown() && !r.Description.IsNull() {
+		*description = r.Description.ValueString()
+	} else {
+		description = nil
+	}
+	enabled := new(bool)
+	if !r.Enabled.IsUnknown() && !r.Enabled.IsNull() {
+		*enabled = r.Enabled.ValueBool()
+	} else {
+		enabled = nil
+	}
+	groupID := r.GroupID.ValueInt64()
+	name := r.Name.ValueString()
+	scalePriority := new(int64)
+	if !r.ScalePriority.IsUnknown() && !r.ScalePriority.IsNull() {
+		*scalePriority = r.ScalePriority.ValueInt64()
+	} else {
+		scalePriority = nil
+	}
+	visibility := new(shared.ZoneCreateVisibility)
+	if !r.Visibility.IsUnknown() && !r.Visibility.IsNull() {
+		*visibility = shared.ZoneCreateVisibility(r.Visibility.ValueString())
+	} else {
+		visibility = nil
+	}
+	code1 := new(string)
+	if !r.ZoneType.Code.IsUnknown() && !r.ZoneType.Code.IsNull() {
+		*code1 = r.ZoneType.Code.ValueString()
+	} else {
+		code1 = nil
+	}
+	zoneType := shared.ZoneCreateZoneType{
+		Code: code1,
+	}
+	out := shared.ZoneCreate{
+		AccountID:     accountID,
+		Code:          code,
+		Config:        config,
+		Credential:    credential,
+		Description:   description,
+		Enabled:       enabled,
+		GroupID:       groupID,
+		Name:          name,
+		ScalePriority: scalePriority,
+		Visibility:    visibility,
+		ZoneType:      zoneType,
+	}
+	return &out
+}
+
+func (r *ZoneResourceModel) ToGetSDKType() *shared.ZoneCreate {
+	out := r.ToCreateSDKType()
+	return out
+}
+
+func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
+	accountID := new(int64)
+	if !r.AccountID.IsUnknown() && !r.AccountID.IsNull() {
+		*accountID = r.AccountID.ValueInt64()
+	} else {
+		accountID = nil
+	}
+	code := new(string)
+	if !r.Code.IsUnknown() && !r.Code.IsNull() {
+		*code = r.Code.ValueString()
+	} else {
+		code = nil
+	}
+	var config *shared.ZoneVcenterConfig2
+	if r.Config != nil {
+		apiURL := new(string)
+		if !r.Config.APIURL.IsUnknown() && !r.Config.APIURL.IsNull() {
+			*apiURL = r.Config.APIURL.ValueString()
+		} else {
+			apiURL = nil
+		}
+		applianceURL := new(string)
+		if !r.Config.ApplianceURL.IsUnknown() && !r.Config.ApplianceURL.IsNull() {
+			*applianceURL = r.Config.ApplianceURL.ValueString()
+		} else {
+			applianceURL = nil
+		}
+		datacenter := new(string)
+		if !r.Config.Datacenter.IsUnknown() && !r.Config.Datacenter.IsNull() {
+			*datacenter = r.Config.Datacenter.ValueString()
+		} else {
+			datacenter = nil
+		}
+		username := new(string)
+		if !r.Config.Username.IsUnknown() && !r.Config.Username.IsNull() {
+			*username = r.Config.Username.ValueString()
+		} else {
+			username = nil
+		}
+		config = &shared.ZoneVcenterConfig2{
+			APIURL:       apiURL,
+			ApplianceURL: applianceURL,
+			Datacenter:   datacenter,
+			Username:     username,
+		}
+	}
 	var credential *shared.ZoneCredential
 	if r.Credential != nil {
-		typeVar := new(string)
-		if !r.Credential.Type.IsUnknown() && !r.Credential.Type.IsNull() {
-			*typeVar = r.Credential.Type.ValueString()
+		id := new(int64)
+		if !r.Credential.ID.IsUnknown() && !r.Credential.ID.IsNull() {
+			*id = r.Credential.ID.ValueInt64()
 		} else {
-			typeVar = nil
+			id = nil
 		}
 		credential = &shared.ZoneCredential{
-			Type: typeVar,
+			ID: id,
 		}
 	}
 	enabled := new(bool)
@@ -79,11 +193,11 @@ func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 		} else {
 			accountId1 = nil
 		}
-		id := new(int64)
+		id1 := new(int64)
 		if !groupsItem.ID.IsUnknown() && !groupsItem.ID.IsNull() {
-			*id = groupsItem.ID.ValueInt64()
+			*id1 = groupsItem.ID.ValueInt64()
 		} else {
-			id = nil
+			id1 = nil
 		}
 		name := new(string)
 		if !groupsItem.Name.IsUnknown() && !groupsItem.Name.IsNull() {
@@ -93,15 +207,15 @@ func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 		}
 		groups = append(groups, shared.ZoneGroups{
 			AccountID: accountId1,
-			ID:        id,
+			ID:        id1,
 			Name:      name,
 		})
 	}
-	id1 := new(int64)
+	id2 := new(int64)
 	if !r.ID.IsUnknown() && !r.ID.IsNull() {
-		*id1 = r.ID.ValueInt64()
+		*id2 = r.ID.ValueInt64()
 	} else {
-		id1 = nil
+		id2 = nil
 	}
 	name1 := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
@@ -140,13 +254,18 @@ func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 		Credential:    credential,
 		Enabled:       enabled,
 		Groups:        groups,
-		ID:            id1,
+		ID:            id2,
 		Name:          name1,
 		ScalePriority: scalePriority,
 		Visibility:    visibility,
 		ZoneType:      zoneType,
 	}
 	return &out
+}
+
+func (r *ZoneResourceModel) ToDeleteSDKType() *shared.ZoneCreate {
+	out := r.ToCreateSDKType()
+	return out
 }
 
 func (r *ZoneResourceModel) RefreshFromGetResponse(resp *shared.Zone) {
@@ -195,10 +314,10 @@ func (r *ZoneResourceModel) RefreshFromGetResponse(resp *shared.Zone) {
 		r.Credential = nil
 	} else {
 		r.Credential = &ZoneCredential{}
-		if resp.Credential.Type != nil {
-			r.Credential.Type = types.StringValue(*resp.Credential.Type)
+		if resp.Credential.ID != nil {
+			r.Credential.ID = types.Int64Value(*resp.Credential.ID)
 		} else {
-			r.Credential.Type = types.StringNull()
+			r.Credential.ID = types.Int64Null()
 		}
 	}
 	if resp.Enabled != nil {

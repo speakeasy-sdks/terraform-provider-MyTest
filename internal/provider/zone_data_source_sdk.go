@@ -53,10 +53,10 @@ func (r *ZoneDataSourceModel) RefreshFromGetResponse(resp *shared.Zone) {
 		r.Credential = nil
 	} else {
 		r.Credential = &ZoneCredential{}
-		if resp.Credential.Type != nil {
-			r.Credential.Type = types.StringValue(*resp.Credential.Type)
+		if resp.Credential.ID != nil {
+			r.Credential.ID = types.Int64Value(*resp.Credential.ID)
 		} else {
-			r.Credential.Type = types.StringNull()
+			r.Credential.ID = types.Int64Null()
 		}
 	}
 	if resp.Enabled != nil {

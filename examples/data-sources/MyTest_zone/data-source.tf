@@ -1,3 +1,5 @@
 data "MyTest_zone" "my_zone" {
-  id = 3
+  description = "...my_description..."
+  group_id    = 3
+  id          = 10
 }

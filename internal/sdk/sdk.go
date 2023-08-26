@@ -135,7 +135,7 @@ func New(opts ...SDKOption) *MyTest {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "terraform",
 			OpenAPIDocVersion: "6.1.1",
-			SDKVersion:        "0.3.0",
+			SDKVersion:        "0.3.1",
 			GenVersion:        "2.88.2",
 			ServerDefaults: []map[string]string{
 				{
