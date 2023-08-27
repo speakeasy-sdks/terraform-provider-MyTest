@@ -20,31 +20,8 @@ func (r *ZoneResourceModel) ToCreateSDKType() *shared.ZoneCreate {
 	} else {
 		code = nil
 	}
-	var config *shared.ZoneVcenterConfig
+	var config *shared.ZoneCreateConfig
 	if r.Config != nil {
-		apiURL := new(string)
-		if !r.Config.APIURL.IsUnknown() && !r.Config.APIURL.IsNull() {
-			*apiURL = r.Config.APIURL.ValueString()
-		} else {
-			apiURL = nil
-		}
-		applianceURL := new(string)
-		if !r.Config.ApplianceURL.IsUnknown() && !r.Config.ApplianceURL.IsNull() {
-			*applianceURL = r.Config.ApplianceURL.ValueString()
-		} else {
-			applianceURL = nil
-		}
-		datacenter := new(string)
-		if !r.Config.Datacenter.IsUnknown() && !r.Config.Datacenter.IsNull() {
-			*datacenter = r.Config.Datacenter.ValueString()
-		} else {
-			datacenter = nil
-		}
-		config = &shared.ZoneVcenterConfig{
-			APIURL:       apiURL,
-			ApplianceURL: applianceURL,
-			Datacenter:   datacenter,
-		}
 	}
 	var credential *shared.ZoneCreateCredential
 	if r.Credential != nil {
