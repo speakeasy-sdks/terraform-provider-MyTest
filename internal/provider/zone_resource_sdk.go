@@ -20,38 +20,30 @@ func (r *ZoneResourceModel) ToCreateSDKType() *shared.ZoneCreate {
 	} else {
 		code = nil
 	}
-	var config *shared.ZoneCreateConfig
+	var config *shared.ZoneVcenterConfig
 	if r.Config != nil {
-		var zoneVcenterConfig *shared.ZoneVcenterConfig
-		if r.Config.ZoneVcenterConfig != nil {
-			apiURL := new(string)
-			if !r.Config.ZoneVcenterConfig.APIURL.IsUnknown() && !r.Config.ZoneVcenterConfig.APIURL.IsNull() {
-				*apiURL = r.Config.ZoneVcenterConfig.APIURL.ValueString()
-			} else {
-				apiURL = nil
-			}
-			applianceURL := new(string)
-			if !r.Config.ZoneVcenterConfig.ApplianceURL.IsUnknown() && !r.Config.ZoneVcenterConfig.ApplianceURL.IsNull() {
-				*applianceURL = r.Config.ZoneVcenterConfig.ApplianceURL.ValueString()
-			} else {
-				applianceURL = nil
-			}
-			datacenter := new(string)
-			if !r.Config.ZoneVcenterConfig.Datacenter.IsUnknown() && !r.Config.ZoneVcenterConfig.Datacenter.IsNull() {
-				*datacenter = r.Config.ZoneVcenterConfig.Datacenter.ValueString()
-			} else {
-				datacenter = nil
-			}
-			zoneVcenterConfig = &shared.ZoneVcenterConfig{
-				APIURL:       apiURL,
-				ApplianceURL: applianceURL,
-				Datacenter:   datacenter,
-			}
+		apiURL := new(string)
+		if !r.Config.APIURL.IsUnknown() && !r.Config.APIURL.IsNull() {
+			*apiURL = r.Config.APIURL.ValueString()
+		} else {
+			apiURL = nil
 		}
-		if zoneVcenterConfig != nil {
-			config = &shared.ZoneCreateConfig{
-				ZoneVcenterConfig: zoneVcenterConfig,
-			}
+		applianceURL := new(string)
+		if !r.Config.ApplianceURL.IsUnknown() && !r.Config.ApplianceURL.IsNull() {
+			*applianceURL = r.Config.ApplianceURL.ValueString()
+		} else {
+			applianceURL = nil
+		}
+		datacenter := new(string)
+		if !r.Config.Datacenter.IsUnknown() && !r.Config.Datacenter.IsNull() {
+			*datacenter = r.Config.Datacenter.ValueString()
+		} else {
+			datacenter = nil
+		}
+		config = &shared.ZoneVcenterConfig{
+			APIURL:       apiURL,
+			ApplianceURL: applianceURL,
+			Datacenter:   datacenter,
 		}
 	}
 	var credential *shared.ZoneCreateCredential
@@ -135,38 +127,30 @@ func (r *ZoneResourceModel) ToUpdateSDKType() *shared.Zone {
 	} else {
 		code = nil
 	}
-	var config *shared.ZoneConfig
+	var config *shared.ZoneVcenterConfig
 	if r.Config != nil {
-		var zoneVcenterConfig *shared.ZoneVcenterConfig
-		if r.Config.ZoneVcenterConfig != nil {
-			apiURL := new(string)
-			if !r.Config.ZoneVcenterConfig.APIURL.IsUnknown() && !r.Config.ZoneVcenterConfig.APIURL.IsNull() {
-				*apiURL = r.Config.ZoneVcenterConfig.APIURL.ValueString()
-			} else {
-				apiURL = nil
-			}
-			applianceURL := new(string)
-			if !r.Config.ZoneVcenterConfig.ApplianceURL.IsUnknown() && !r.Config.ZoneVcenterConfig.ApplianceURL.IsNull() {
-				*applianceURL = r.Config.ZoneVcenterConfig.ApplianceURL.ValueString()
-			} else {
-				applianceURL = nil
-			}
-			datacenter := new(string)
-			if !r.Config.ZoneVcenterConfig.Datacenter.IsUnknown() && !r.Config.ZoneVcenterConfig.Datacenter.IsNull() {
-				*datacenter = r.Config.ZoneVcenterConfig.Datacenter.ValueString()
-			} else {
-				datacenter = nil
-			}
-			zoneVcenterConfig = &shared.ZoneVcenterConfig{
-				APIURL:       apiURL,
-				ApplianceURL: applianceURL,
-				Datacenter:   datacenter,
-			}
+		apiURL := new(string)
+		if !r.Config.APIURL.IsUnknown() && !r.Config.APIURL.IsNull() {
+			*apiURL = r.Config.APIURL.ValueString()
+		} else {
+			apiURL = nil
 		}
-		if zoneVcenterConfig != nil {
-			config = &shared.ZoneConfig{
-				ZoneVcenterConfig: zoneVcenterConfig,
-			}
+		applianceURL := new(string)
+		if !r.Config.ApplianceURL.IsUnknown() && !r.Config.ApplianceURL.IsNull() {
+			*applianceURL = r.Config.ApplianceURL.ValueString()
+		} else {
+			applianceURL = nil
+		}
+		datacenter := new(string)
+		if !r.Config.Datacenter.IsUnknown() && !r.Config.Datacenter.IsNull() {
+			*datacenter = r.Config.Datacenter.ValueString()
+		} else {
+			datacenter = nil
+		}
+		config = &shared.ZoneVcenterConfig{
+			APIURL:       apiURL,
+			ApplianceURL: applianceURL,
+			Datacenter:   datacenter,
 		}
 	}
 	var credential *shared.ZoneCredential
@@ -281,27 +265,27 @@ func (r *ZoneResourceModel) RefreshFromGetResponse(resp *shared.Zone) {
 	} else {
 		r.Code = types.StringNull()
 	}
+	if r.Config == nil {
+		r.Config = &ZoneVcenterConfig{}
+	}
 	if resp.Config == nil {
 		r.Config = nil
 	} else {
-		r.Config = &ZoneConfig{}
-		if resp.Config.ZoneVcenterConfig != nil {
-			r.Config.ZoneVcenterConfig = &ZoneVcenterConfig{}
-			if resp.Config.ZoneVcenterConfig.APIURL != nil {
-				r.Config.ZoneVcenterConfig.APIURL = types.StringValue(*resp.Config.ZoneVcenterConfig.APIURL)
-			} else {
-				r.Config.ZoneVcenterConfig.APIURL = types.StringNull()
-			}
-			if resp.Config.ZoneVcenterConfig.ApplianceURL != nil {
-				r.Config.ZoneVcenterConfig.ApplianceURL = types.StringValue(*resp.Config.ZoneVcenterConfig.ApplianceURL)
-			} else {
-				r.Config.ZoneVcenterConfig.ApplianceURL = types.StringNull()
-			}
-			if resp.Config.ZoneVcenterConfig.Datacenter != nil {
-				r.Config.ZoneVcenterConfig.Datacenter = types.StringValue(*resp.Config.ZoneVcenterConfig.Datacenter)
-			} else {
-				r.Config.ZoneVcenterConfig.Datacenter = types.StringNull()
-			}
+		r.Config = &ZoneVcenterConfig{}
+		if resp.Config.APIURL != nil {
+			r.Config.APIURL = types.StringValue(*resp.Config.APIURL)
+		} else {
+			r.Config.APIURL = types.StringNull()
+		}
+		if resp.Config.ApplianceURL != nil {
+			r.Config.ApplianceURL = types.StringValue(*resp.Config.ApplianceURL)
+		} else {
+			r.Config.ApplianceURL = types.StringNull()
+		}
+		if resp.Config.Datacenter != nil {
+			r.Config.Datacenter = types.StringValue(*resp.Config.Datacenter)
+		} else {
+			r.Config.Datacenter = types.StringNull()
 		}
 	}
 	if r.Credential == nil {

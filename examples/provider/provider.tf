@@ -2,7 +2,7 @@ terraform {
   required_providers {
     MyTest = {
       source  = "testing/MyTest"
-      version = "0.3.3"
+      version = "0.3.4"
     }
   }
 }
