@@ -8,9 +8,11 @@ import (
 	"context"
 	"fmt"
 
+	"MyTest/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -30,19 +32,19 @@ type ZoneResource struct {
 
 // ZoneResourceModel describes the resource data model.
 type ZoneResourceModel struct {
-	AccountID     types.Int64        `tfsdk:"account_id"`
-	Code          types.String       `tfsdk:"code"`
-	Config        *ZoneVcenterConfig `tfsdk:"config"`
-	Credential    *ZoneCredential    `tfsdk:"credential"`
-	Description   types.String       `tfsdk:"description"`
-	Enabled       types.Bool         `tfsdk:"enabled"`
-	GroupID       types.Int64        `tfsdk:"group_id"`
-	Groups        []ZoneGroups       `tfsdk:"groups"`
-	ID            types.Int64        `tfsdk:"id"`
-	Name          types.String       `tfsdk:"name"`
-	ScalePriority types.Int64        `tfsdk:"scale_priority"`
-	Visibility    types.String       `tfsdk:"visibility"`
-	ZoneType      *ZoneZoneType      `tfsdk:"zone_type"`
+	AccountID     types.Int64     `tfsdk:"account_id"`
+	Code          types.String    `tfsdk:"code"`
+	Config        *ZoneConfig     `tfsdk:"config"`
+	Credential    *ZoneCredential `tfsdk:"credential"`
+	Description   types.String    `tfsdk:"description"`
+	Enabled       types.Bool      `tfsdk:"enabled"`
+	GroupID       types.Int64     `tfsdk:"group_id"`
+	Groups        []ZoneGroups    `tfsdk:"groups"`
+	ID            types.Int64     `tfsdk:"id"`
+	Name          types.String    `tfsdk:"name"`
+	ScalePriority types.Int64     `tfsdk:"scale_priority"`
+	Visibility    types.String    `tfsdk:"visibility"`
+	ZoneType      *ZoneZoneType   `tfsdk:"zone_type"`
 }
 
 func (r *ZoneResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -66,27 +68,27 @@ func (r *ZoneResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Computed: true,
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
-					"api_url": schema.StringAttribute{
+					"zone_vcenter_config": schema.SingleNestedAttribute{
 						Computed: true,
 						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"api_url": schema.StringAttribute{
+								Computed: true,
+								Optional: true,
+							},
+							"appliance_url": schema.StringAttribute{
+								Computed: true,
+								Optional: true,
+							},
+							"datacenter": schema.StringAttribute{
+								Computed: true,
+								Optional: true,
+							},
+						},
 					},
-					"appliance_url": schema.StringAttribute{
-						Computed: true,
-						Optional: true,
-					},
-					"datacenter": schema.StringAttribute{
-						Computed: true,
-						Optional: true,
-					},
-					"password": schema.StringAttribute{
-						Computed:  true,
-						Optional:  true,
-						Sensitive: true,
-					},
-					"username": schema.StringAttribute{
-						Computed: true,
-						Optional: true,
-					},
+				},
+				Validators: []validator.Object{
+					validators.ExactlyOneChild(),
 				},
 			},
 			"credential": schema.SingleNestedAttribute{

@@ -8,8 +8,10 @@ import (
 	"context"
 	"fmt"
 
+	"MyTest/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -29,19 +31,19 @@ type ZoneDataSource struct {
 
 // ZoneDataSourceModel describes the data model.
 type ZoneDataSourceModel struct {
-	AccountID     types.Int64        `tfsdk:"account_id"`
-	Code          types.String       `tfsdk:"code"`
-	Config        *ZoneVcenterConfig `tfsdk:"config"`
-	Credential    *ZoneCredential    `tfsdk:"credential"`
-	Description   types.String       `tfsdk:"description"`
-	Enabled       types.Bool         `tfsdk:"enabled"`
-	GroupID       types.Int64        `tfsdk:"group_id"`
-	Groups        []ZoneGroups       `tfsdk:"groups"`
-	ID            types.Int64        `tfsdk:"id"`
-	Name          types.String       `tfsdk:"name"`
-	ScalePriority types.Int64        `tfsdk:"scale_priority"`
-	Visibility    types.String       `tfsdk:"visibility"`
-	ZoneType      *ZoneZoneType      `tfsdk:"zone_type"`
+	AccountID     types.Int64     `tfsdk:"account_id"`
+	Code          types.String    `tfsdk:"code"`
+	Config        *ZoneConfig     `tfsdk:"config"`
+	Credential    *ZoneCredential `tfsdk:"credential"`
+	Description   types.String    `tfsdk:"description"`
+	Enabled       types.Bool      `tfsdk:"enabled"`
+	GroupID       types.Int64     `tfsdk:"group_id"`
+	Groups        []ZoneGroups    `tfsdk:"groups"`
+	ID            types.Int64     `tfsdk:"id"`
+	Name          types.String    `tfsdk:"name"`
+	ScalePriority types.Int64     `tfsdk:"scale_priority"`
+	Visibility    types.String    `tfsdk:"visibility"`
+	ZoneType      *ZoneZoneType   `tfsdk:"zone_type"`
 }
 
 // Metadata returns the data source type name.
@@ -64,22 +66,23 @@ func (r *ZoneDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 			"config": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"api_url": schema.StringAttribute{
+					"zone_vcenter_config": schema.SingleNestedAttribute{
 						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"api_url": schema.StringAttribute{
+								Computed: true,
+							},
+							"appliance_url": schema.StringAttribute{
+								Computed: true,
+							},
+							"datacenter": schema.StringAttribute{
+								Computed: true,
+							},
+						},
 					},
-					"appliance_url": schema.StringAttribute{
-						Computed: true,
-					},
-					"datacenter": schema.StringAttribute{
-						Computed: true,
-					},
-					"password": schema.StringAttribute{
-						Computed:  true,
-						Sensitive: true,
-					},
-					"username": schema.StringAttribute{
-						Computed: true,
-					},
+				},
+				Validators: []validator.Object{
+					validators.ExactlyOneChild(),
 				},
 			},
 			"credential": schema.SingleNestedAttribute{

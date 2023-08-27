@@ -18,37 +18,27 @@ func (r *ZoneDataSourceModel) RefreshFromGetResponse(resp *shared.Zone) {
 	} else {
 		r.Code = types.StringNull()
 	}
-	if r.Config == nil {
-		r.Config = &ZoneVcenterConfig{}
-	}
 	if resp.Config == nil {
 		r.Config = nil
 	} else {
-		r.Config = &ZoneVcenterConfig{}
-		if resp.Config.APIURL != nil {
-			r.Config.APIURL = types.StringValue(*resp.Config.APIURL)
-		} else {
-			r.Config.APIURL = types.StringNull()
-		}
-		if resp.Config.ApplianceURL != nil {
-			r.Config.ApplianceURL = types.StringValue(*resp.Config.ApplianceURL)
-		} else {
-			r.Config.ApplianceURL = types.StringNull()
-		}
-		if resp.Config.Datacenter != nil {
-			r.Config.Datacenter = types.StringValue(*resp.Config.Datacenter)
-		} else {
-			r.Config.Datacenter = types.StringNull()
-		}
-		if resp.Config.Password != nil {
-			r.Config.Password = types.StringValue(*resp.Config.Password)
-		} else {
-			r.Config.Password = types.StringNull()
-		}
-		if resp.Config.Username != nil {
-			r.Config.Username = types.StringValue(*resp.Config.Username)
-		} else {
-			r.Config.Username = types.StringNull()
+		r.Config = &ZoneConfig{}
+		if resp.Config.ZoneVcenterConfig != nil {
+			r.Config.ZoneVcenterConfig = &ZoneVcenterConfig{}
+			if resp.Config.ZoneVcenterConfig.APIURL != nil {
+				r.Config.ZoneVcenterConfig.APIURL = types.StringValue(*resp.Config.ZoneVcenterConfig.APIURL)
+			} else {
+				r.Config.ZoneVcenterConfig.APIURL = types.StringNull()
+			}
+			if resp.Config.ZoneVcenterConfig.ApplianceURL != nil {
+				r.Config.ZoneVcenterConfig.ApplianceURL = types.StringValue(*resp.Config.ZoneVcenterConfig.ApplianceURL)
+			} else {
+				r.Config.ZoneVcenterConfig.ApplianceURL = types.StringNull()
+			}
+			if resp.Config.ZoneVcenterConfig.Datacenter != nil {
+				r.Config.ZoneVcenterConfig.Datacenter = types.StringValue(*resp.Config.ZoneVcenterConfig.Datacenter)
+			} else {
+				r.Config.ZoneVcenterConfig.Datacenter = types.StringNull()
+			}
 		}
 	}
 	if r.Credential == nil {

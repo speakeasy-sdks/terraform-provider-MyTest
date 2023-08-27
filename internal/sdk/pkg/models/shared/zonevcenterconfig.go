@@ -6,6 +6,4 @@ type ZoneVcenterConfig struct {
 	APIURL       *string `json:"apiUrl,omitempty"`
 	ApplianceURL *string `json:"applianceUrl,omitempty"`
 	Datacenter   *string `json:"datacenter,omitempty"`
-	Password     *string `json:"password,omitempty"`
-	Username     *string `json:"username,omitempty"`
 }

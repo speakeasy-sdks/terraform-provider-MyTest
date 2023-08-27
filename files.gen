@@ -1,6 +1,7 @@
 internal/sdk/clouds.go
 internal/sdk/sdk.go
 internal/provider/type_zone_vcenter_config.go
+internal/provider/type_zone_config.go
 internal/provider/type_zone_credential.go
 internal/provider/type_zone_groups.go
 internal/provider/type_zone_zone_type.go
