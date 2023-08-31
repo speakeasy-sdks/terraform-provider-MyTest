@@ -70,3 +70,4 @@ examples/resources/MyTest_zone/resource.tf
 internal/provider/zone_data_source.go
 internal/provider/zone_data_source_sdk.go
 examples/data-sources/MyTest_zone/data-source.tf
+.gitattributes
