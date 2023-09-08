@@ -2,7 +2,6 @@
 
 package shared
 
-// DefaultError - Error Codes
 type DefaultError struct {
 	Msg *string `json:"msg,omitempty"`
 }
