@@ -3,55 +3,9 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 )
-
-type ZoneCreateConfigType string
-
-const (
-	ZoneCreateConfigTypeZoneVcenterConfig ZoneCreateConfigType = "zoneVcenterConfig"
-)
-
-type ZoneCreateConfig struct {
-	ZoneVcenterConfig *ZoneVcenterConfig
-
-	Type ZoneCreateConfigType
-}
-
-func CreateZoneCreateConfigZoneVcenterConfig(zoneVcenterConfig ZoneVcenterConfig) ZoneCreateConfig {
-	typ := ZoneCreateConfigTypeZoneVcenterConfig
-
-	return ZoneCreateConfig{
-		ZoneVcenterConfig: &zoneVcenterConfig,
-		Type:              typ,
-	}
-}
-
-func (u *ZoneCreateConfig) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	zoneVcenterConfig := new(ZoneVcenterConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&zoneVcenterConfig); err == nil {
-		u.ZoneVcenterConfig = zoneVcenterConfig
-		u.Type = ZoneCreateConfigTypeZoneVcenterConfig
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u ZoneCreateConfig) MarshalJSON() ([]byte, error) {
-	if u.ZoneVcenterConfig != nil {
-		return json.Marshal(u.ZoneVcenterConfig)
-	}
-
-	return nil, nil
-}
 
 // ZoneCreateCredential - Map containing Credential ID. Setting `type` to `local` means use the values set in the local cloud config instead of associating a credential.
 type ZoneCreateCredential struct {
@@ -95,8 +49,8 @@ type ZoneCreate struct {
 	// Specifies which Tenant this cloud should be assigned to
 	AccountID *int64 `json:"accountId,omitempty"`
 	// Optional code for use with policies
-	Code   *string           `json:"code,omitempty"`
-	Config *ZoneCreateConfig `json:"config,omitempty"`
+	Code   *string            `json:"code,omitempty"`
+	Config *ZoneVcenterConfig `json:"config,omitempty"`
 	// Map containing Credential ID. Setting `type` to `local` means use the values set in the local cloud config instead of associating a credential.
 	Credential *ZoneCreateCredential `json:"credential,omitempty"`
 	// Optional description field if you want to put more info there
