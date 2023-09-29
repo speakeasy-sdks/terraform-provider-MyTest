@@ -1,5 +1,5 @@
 resource "MyTest_zone" "my_zone" {
-  account_id = 6
+  account_id = 8
   code       = "...my_code..."
   config = {
     api_url       = "...my_api_url..."
@@ -7,13 +7,13 @@ resource "MyTest_zone" "my_zone" {
     datacenter    = "...my_datacenter..."
   }
   credential = {
-    id = 6
+    id = 5
   }
   description    = "...my_description..."
   enabled        = true
   group_id       = 3
-  name           = "Ismael Little"
-  scale_priority = 6
+  name           = "Ada Kling"
+  scale_priority = 9
   visibility     = "...my_visibility..."
   zone_type = {
     code = "vmware"
