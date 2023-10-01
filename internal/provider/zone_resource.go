@@ -68,15 +68,12 @@ func (r *ZoneResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Attributes: map[string]schema.Attribute{
 					"api_url": schema.StringAttribute{
 						Computed: true,
-						Optional: true,
 					},
 					"appliance_url": schema.StringAttribute{
 						Computed: true,
-						Optional: true,
 					},
 					"datacenter": schema.StringAttribute{
 						Computed: true,
-						Optional: true,
 					},
 				},
 			},
